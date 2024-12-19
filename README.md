@@ -1,7 +1,7 @@
 # JokeAPI Project
 
-This repository is a small project designed to practice testing methodologies and principles in ASP.NET Core while working on a Web API. The project focuses on implementing clean, testable code and leveraging modern tools like mocking and dependency injection to ensure robust and maintainable applications.
-Purpose of the Repository
+This repository is a small project designed to practice testing methodologies and principles in ASP.NET Core while working on a Web API.
+The project focuses on implementing clean, testable code and using tools like mocking and dependency injection to ensure robust and maintainable applications.
 
 The primary goal of this project is to demonstrate the ability to:
 
