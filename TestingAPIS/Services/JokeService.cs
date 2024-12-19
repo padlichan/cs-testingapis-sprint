@@ -4,9 +4,9 @@ namespace TestingAPIS.Services
 {
     public class JokeService
     {
-        private readonly JokeRepository _jokeRepository;
+        private readonly IJokeRepository _jokeRepository;
 
-        public JokeService(JokeRepository jokeRepository)
+        public JokeService(IJokeRepository jokeRepository)
         {
             _jokeRepository = jokeRepository;
         }
