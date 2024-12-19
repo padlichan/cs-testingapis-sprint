@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 1,
+    "SetupLine": "What do you call a fish with no eyes?",
+    "PunchLine": "A fsh",
+    "Category": "animal",
+    "isFunny": true
+  },
+  {
+    "Id": 2,
+    "SetupLine": "Why did the developer go to the opticians?",
+    "PunchLine": "So they could C#",
+    "Category": "programming",
+    "isFunny": false
+  },
+  {
+    "Id": 3,
+    "SetupLine": "Why are pirates called pirates?",
+    "PunchLine": "Cuz they ARRRRR!",
+    "Category": "pirate",
+    "isFunny": true
+  }
+]
