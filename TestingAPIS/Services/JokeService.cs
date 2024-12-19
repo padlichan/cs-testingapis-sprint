@@ -2,7 +2,8 @@
 
 namespace TestingAPIS.Services
 {
-    public class JokeService
+    public interface IJokeService { public IEnumerable<Joke> GetAllJokes(); }
+    public class JokeService : IJokeService
     {
         private readonly IJokeRepository _jokeRepository;
 

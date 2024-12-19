@@ -1,25 +1,25 @@
-﻿using TestingAPIS.Services;
-using Moq;
-using TestingAPIS.Models;
-using System.Drawing.Text;
+﻿using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TestingAPIS.Controllers;
+using TestingAPIS.Services;
 
-namespace TestingAPIS.Tests.ServiceTests
+namespace TestingAPIS.Tests.ControllerTests
 {
-    public class JokeServiceTest
+    internal class JokeControllerTest
     {
-        // Configure the required properties
-        private JokeService jokeService;
-        private Mock<IJokeRepository> mockJokeRepository;
+        private JokesController jokesController;
+        private Mock<IJokeService> mockJokeService;
         private List<Joke> jokes = [];
-
 
         [SetUp]
         public void Setup()
         {
-            // Instantiate the property values
-            mockJokeRepository = new Mock<IJokeRepository>();
-            jokeService = new JokeService(mockJokeRepository.Object);
-
+            mockJokeService = new Mock<IJokeService>();
+            jokesController = new JokesController(mockJokeService.Object);
 
             Joke joke1 = new Joke
             {
@@ -45,21 +45,23 @@ namespace TestingAPIS.Tests.ServiceTests
                 Category = "Science",
                 IsFunny = true
             };
+
             jokes.Add(joke1);
             jokes.Add(joke2);
             jokes.Add(joke3);
         }
 
         [Test]
-        public void GetAllJokes_ReturnsAllJokes()
+        public void Index_ReturnsAllJokeS()
         {
-            // ARRANGE
-            mockJokeRepository.Setup(x => x.FindAllJokes()).Returns(jokes);
+            //Arrange
+            mockJokeService.Setup(m => m.GetAllJokes()).Returns(jokes);
 
-            // ACT
-            var result = jokeService.GetAllJokes();
+            //Act
+            var result = jokesController.Index();
 
-            // ASSERT
+            //Assert
+
             Assert.That(result, Is.EquivalentTo(jokes));
 
         }

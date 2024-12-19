@@ -6,9 +6,9 @@ namespace TestingAPIS.Controllers
     [Route("[controller]")]
     public class JokesController : ControllerBase
     {
-        private readonly JokeService _jokeService;
+        private readonly IJokeService _jokeService;
 
-        public JokesController(JokeService jokeService)
+        public JokesController(IJokeService jokeService)
         {
             _jokeService = jokeService;
         }

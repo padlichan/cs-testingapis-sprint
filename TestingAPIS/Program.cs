@@ -1,3 +1,4 @@
+using TestingAPIS;
 using TestingAPIS.Models;
 using TestingAPIS.Services;
 
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IJokeRepository, JokeRepository>();
-builder.Services.AddScoped<JokeService>();
+builder.Services.AddScoped<IJokeService, JokeService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
