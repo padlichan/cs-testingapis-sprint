@@ -4,6 +4,7 @@ using TestingAPIS.Services;
 namespace TestingAPIS.Controllers
 {
     [Route("[controller]")]
+    [ApiController]
     public class JokesController : ControllerBase
     {
         private readonly IJokeService _jokeService;
@@ -19,10 +20,18 @@ namespace TestingAPIS.Controllers
         }
 
         [HttpPost]
-        public Joke PostJoke(Joke joke)
+        public IActionResult PostJoke(Joke joke)
         {
-            return _jokeService.AddJoke(joke);
+            if (string.IsNullOrEmpty(joke.PunchLine)) return BadRequest();
+            return Ok(_jokeService.AddJoke(joke));
         }
 
+        [HttpDelete("{id}")]
+
+        public IActionResult DeleteJokeById(int id)
+        {
+             if(_jokeService.DeleteJoke(id)) return NoContent();
+             return NotFound();
+        }
     }
 }

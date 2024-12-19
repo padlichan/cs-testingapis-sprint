@@ -80,7 +80,7 @@ namespace TestingAPIS.Tests.ServiceTests
         }
 
         [Test]
-        public void PostJoke_InvokesModelWithCorrectArgument()
+        public void PostJoke_InvokesModelWithCorrectArgumentOnce()
         {
             mockJokeRepository.Setup(m => m.AddJoke(joke1)).Returns(joke1);
 
@@ -88,5 +88,39 @@ namespace TestingAPIS.Tests.ServiceTests
 
             mockJokeRepository.Verify(m => m.AddJoke(joke1), Times.Once);
         }
+
+        [Test]
+        public void DeleteJoke_ReturnTrue_ValidId()
+        {
+            int validId = 1;
+            mockJokeRepository.Setup(m => m.DeleteJoke(validId)).Returns(true);
+
+            var result = jokeService.DeleteJoke(validId);
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void DeleteJoke_ReturnFalse_InvalidId()
+        {
+            int invalidId = 1;
+            mockJokeRepository.Setup(m => m.DeleteJoke(invalidId)).Returns(false);
+
+            var result = jokeService.DeleteJoke(invalidId);
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void DeleteJoke_InvokesModelWithCorrectArgumentOnce()
+        {
+            int id = 1;
+            mockJokeRepository.Setup(m => m.DeleteJoke(id)).Returns(true);
+
+            jokeService.DeleteJoke(id);
+
+            mockJokeRepository.Verify(m => m.DeleteJoke(id), Times.Once);
+        }
+        
     }
 }

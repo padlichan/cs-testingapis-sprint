@@ -6,6 +6,8 @@ namespace TestingAPIS.Services
     {
         public IEnumerable<Joke> GetAllJokes();
         public Joke AddJoke(Joke joke);
+
+        public bool DeleteJoke(int id);
     }
     public class JokeService : IJokeService
     {
@@ -24,6 +26,11 @@ namespace TestingAPIS.Services
         public Joke AddJoke(Joke joke)
         {
             return _jokeRepository.AddJoke(joke);
+        }
+
+        public bool DeleteJoke(int id)
+        {
+            return _jokeRepository.DeleteJoke(id);
         }
     }
 }

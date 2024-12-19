@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TestingAPIS.Controllers;
 using TestingAPIS.Services;
@@ -35,6 +37,7 @@ namespace TestingAPIS.Tests.ControllerTests
             IsFunny = true
         };
 
+
         [SetUp]
         public void Setup()
         {
@@ -62,7 +65,7 @@ namespace TestingAPIS.Tests.ControllerTests
         public void PostJoke_InvokesServiceWithCorrectArgument()
         {
             //Arrange
-            
+
             mockJokeService.Setup(m => m.AddJoke(joke1)).Returns(joke1);
 
             //Act 
@@ -85,11 +88,61 @@ namespace TestingAPIS.Tests.ControllerTests
             mockJokeService.Setup(m => m.AddJoke(joke1)).Returns(expectedResult);
 
             //Act
-            var result = jokesController.PostJoke(joke1);
+            var result = (jokesController.PostJoke(joke1) as OkObjectResult)?.Value as Joke;
 
             //Assert
-            result.Should().Be(expectedResult);
 
+            result.Should().Be(expectedResult);
+        }
+
+        [Test]
+        public void PostJoke_BadRequest_MissingPunchLine()
+        {
+            //Arrange
+            Joke jokeNoPunchLine = new Joke
+            {
+                Id = 3,
+                SetupLine = "Why don’t scientists trust atoms?",
+                PunchLine = "",
+                Category = "Science",
+                IsFunny = true
+            };
+
+            //Act
+            var result = jokesController.PostJoke(jokeNoPunchLine) as BadRequestResult;
+
+            //Assert
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void DeleteJoke_NoContent_ValidId()
+        {
+            //Arrange
+            mockJokeService.Setup(m => m.DeleteJoke(1)).Returns(true);
+
+            //Act
+            var result = jokesController.DeleteJokeById(1) as NoContentResult;
+
+            //Assert
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void DeleteJoke_NotFound_InvalidId()
+        {
+            mockJokeService.Setup(m => m.DeleteJoke(1)).Returns(false);
+            var result = jokesController.DeleteJokeById(1) as NotFoundResult;
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void DeleteJoke_InvokesServiceWithCorrectArgument()
+        {
+            mockJokeService.Setup(m => m.DeleteJoke(1)).Returns(true);
+            jokesController.DeleteJokeById(1);
+
+            mockJokeService.Verify(m => m.DeleteJoke(1), Times.Once());
         }
     }
 }

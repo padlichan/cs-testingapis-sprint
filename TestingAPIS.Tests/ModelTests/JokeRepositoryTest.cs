@@ -41,5 +41,34 @@ namespace TestingAPIS.Tests.ModelTests
             var result = jokeRepository.AddJoke(input);
             result.Should().BeEquivalentTo(expectedResult);
         }
+
+        [Test]
+        public void DeleteJoke_ReturnTrue_ValidId()
+        {
+            //This relies on the repo having at least one joke
+            int validId = jokeRepository.FindAllJokes().First().Id;
+            var result = jokeRepository.DeleteJoke(validId);
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void DeleteJoke_ReturnFalse_InvalidId()
+        {
+            //This relies on not having a joke with Id = 999
+            int invalidId = 999;
+            var result = jokeRepository.DeleteJoke(invalidId);
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void DeleteJoke_DeletesJoke()
+        {
+            int validId = 1;
+
+            jokeRepository.DeleteJoke(validId);
+            bool existsJoke = jokeRepository.FindAllJokes().Any(j => j.Id == validId);
+            existsJoke.Should().BeFalse();
+        }
+
     }
 }
